@@ -6,7 +6,7 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { RiAdminFill } from "react-icons/ri";
 function Sidebar() {
     return (
-        <div className='flex flex-col items-start w-full  h-screen bg-gray-400 sticky'>
+        <div className='flex flex-col items-start w-full  h-screen bg-gray-500 sticky'>
             <div className='w-full flex flex-col items-center justify-center h-24 bg-gray-400'>
                 <span className='font-bold text-2xl'>SideBar</span>
             </div>
