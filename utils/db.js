@@ -10,7 +10,7 @@ const connectToDB = async () => {
                 isConnected: true
             }
         }
-        await mongoose.connect("mongodb://localhost:27017/academy");
+        await mongoose.connect("mongodb://localhost:27017/next-auth");
 
         return {
             status: 200,
@@ -22,7 +22,7 @@ const connectToDB = async () => {
     } catch (error) {
         return {
             status: 401,
-            message: `Connect To Db Failed! : Error ${error}`,
+            message: `Connect To Db Failed!  Error : ${error}`,
             isConnected: false
         }
     }
