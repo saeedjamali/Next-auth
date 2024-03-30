@@ -35,8 +35,8 @@ const handler = async (req, res) => {
             //Create new User 
             const statusSignUp = await userModel.create({ firstname, lastname, username, email, password: hashedPassword, rule: "USER" });
             return res
-                .setHeader('Set-Cookie', serialize('token', token, { httpOnly: true, path: '/', maxAge: 60 * 60 }))
-                .status(200)
+                // .setHeader('Set-Cookie', serialize('token', token, { httpOnly: true, path: '/', maxAge: 60 * 60 }))
+                .status(201)  //create user with status code 201
                 .json({ message: "User Created Succesfully :))" })
 
         } catch (error) {

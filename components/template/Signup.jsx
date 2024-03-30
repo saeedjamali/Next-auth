@@ -22,14 +22,14 @@ function Signup() {
         try {
             const response = await axios.post('/api/auth/signup', newUser);
     
-            if (response.status == 200) {
+            if (response.status == 201) {
                 toast.success(response.data.message);
                 setFirstName("");
                 setLastName("");
                 setUserName("");
                 setEmail("");
                 setPassword("");
-                router.push('/dashboard');
+                router.push('/signin');
 
             } else {
                 toast.error(response.data.message)
