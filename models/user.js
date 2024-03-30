@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import todo from "@/models/todo"
+
 const schema = mongoose.Schema({
     firstname: {
         type: String,
@@ -35,11 +37,11 @@ const schema = mongoose.Schema({
     }
 )
 
-schema.virtual("course", {
-    ref: "course",
+schema.virtual("todo", {
+    ref: "todo",
     localField: "_id",
     foreignField: "user"
-}); 
+});
 
 const user = mongoose.models?.user || mongoose.model("user", schema);
 export default user

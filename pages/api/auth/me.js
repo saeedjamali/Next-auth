@@ -19,9 +19,9 @@ const handler = async (req, res) => {
             return res.status(401).json({ message: "You are not login !!" })
         }
 
-        const user = await userModel.findOne({ email: payloadToken.email }, "firstname lastname rule");
+        const user = await userModel.findOne({ email: payloadToken.email }, "firstname lastname rule").populate("todo").lean();
         if (user) {
-            return res.status(200).json({ message: "User is login !!", data:user })
+            return res.status(200).json({ message: "User is login !!", data: user })
         }
         return res.status(401).json({ message: "User not found!! plz signin again" })
 

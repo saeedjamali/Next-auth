@@ -31,10 +31,12 @@ const handler = async (req, res) => {
 
             //Generate Token
             const token = generateToken({ username: isUserExist.username, email: isUserExist.email });
+            
+            // Set Cookie
             return res
                 .setHeader('Set-Cookie', serialize('token', token, { httpOnly: true, path: '/', maxAge: 60 * 60 }))
                 .status(200)
-                .json({ message: "User login Succesfully :))" })
+                .json({ message: "User login Succesfully :))", data: isUserExist })
 
         } catch (error) {
             return res.status(500).json({ message: `UnKnown Internal Server Error : ${error}` })

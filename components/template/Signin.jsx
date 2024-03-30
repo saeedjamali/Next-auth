@@ -10,7 +10,7 @@ function Signin() {
     const [identifier, setIdentifier] = useState("");
     const [password, setPassword] = useState("");
     const router = useRouter();
-    const { setIsLoggedIn, setIsAdmin } = useUser();
+    const { setIsLoggedIn, setIsAdmin, setUser } = useUser();
 
 
 
@@ -22,6 +22,7 @@ function Signin() {
                 if (response.status == 200) {
                     if (response.data.data.rule == "ADMIN") {
                         setIsAdmin(true);
+                        setUser(response.data.data);
                     }
                     router.push("/dashboard");
                     toast.success(response.data.message);
@@ -38,7 +39,7 @@ function Signin() {
         e.preventDefault();
 
         if (!identifier.trim() || !password.trim()) {
-            return toast.error("Plz Form is Completed!!")
+            return toast.error("Signin form is not Completed!!")
         }
 
         const signinUser = { identifier, password };
@@ -50,7 +51,8 @@ function Signin() {
                 router.push('/dashboard');
                 setIdentifier("");
                 setPassword("");
-               
+                setUser(response.data.data)
+
             } else {
                 toast.error(response.data.message);
             }

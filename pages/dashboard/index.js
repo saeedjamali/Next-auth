@@ -3,22 +3,21 @@ import connectToDB from '@/utils/db';
 import React, { useEffect } from 'react'
 import userModel from "@/models/user"
 import { useUser } from '../context/userProvider';
+import Todolist from '@/components/template/Todolist';
 
 function Dashboard({ user }) {
+
   const { setIsLoggedIn, setIsAdmin } = useUser();
   useEffect(() => {
     if (user.rule == "ADMIN") setIsAdmin(true);
 
   }, [user]);
   return (
-    <div>Dashboard (welcome {user?.firstname} - {user?.lastname})</div>
+    <div><Todolist user={user} /></div>
   )
 }
 
 export default Dashboard
-
-
-
 
 //SSR Route Protection
 export async function getServerSideProps(context) {
@@ -45,7 +44,8 @@ export async function getServerSideProps(context) {
   const { email } = payloadToken;
   const { isConnected } = await connectToDB();
   if (isConnected) {
-    const user = await userModel.findOne({ email }, "rule firstname lastname -_id");
+    const user = await userModel.findOne({ email }, "rule firstname lastname _id").populate("todo")
+      .lean();
     if (!user) {
       return {
         redirect: {

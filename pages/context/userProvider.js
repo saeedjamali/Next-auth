@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 
@@ -8,8 +9,28 @@ const UserContext = createContext();
 function UserProvider({ children }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [user, setUser] = useState("");
+    const router = useRouter();
 
-    
+
+    const handleSignOut = async () => {
+        try {
+            const response = await axios.get("/api/auth/signout");
+            console.log(response)
+            if (response.status == 200) {
+                toast.success(response.data.message);
+                router.push("/")
+                setIsAdmin(false);
+                setIsLoggedIn(false);
+            } else {
+                toast.error(response.data.message);
+            }
+        } catch (error) {
+            console.log(error.response?.data.message);
+        }
+
+
+    }
     useEffect(() => {
         const userAuth = async () => {
 
@@ -36,7 +57,7 @@ function UserProvider({ children }) {
 
 
     return (
-        <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }}>{children}</UserContext.Provider>
+        <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin, user, setUser, handleSignOut }}>{children}</UserContext.Provider>
     )
 }
 

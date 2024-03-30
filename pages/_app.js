@@ -11,6 +11,7 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <UserProvider>
+       
         <Toaster />
         <div className="font-yekan font-medium text-[0.8rem] w-full flex bg-gray-100">
           <div className="w-[15%] h-screen    ">
