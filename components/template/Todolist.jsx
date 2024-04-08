@@ -23,8 +23,6 @@ function Todolist({ user }) {
         try {
             const response = await axios.get(`/api/auth/me`);
             if (response.status == 200) {
-                // toast.success(response.data.message);
-                // console.log("Respomse  :", response);
                 setTodos(response.data.data.todo)
                 setTitle("")
             } else {
@@ -52,9 +50,9 @@ function Todolist({ user }) {
         const newTodo = {
             isDone: false,
             title,
-            //! 1 way for add user id
+            //! 1 way for add user id in frontend
             user: user._id
-            //* 2 best way : get id or email backend side 
+            //* 2 best way : get id or email backend side from req.cookie and tooken
             //روش درست اینه که یوزر ایدی یا ایمیل را سمت بکند ار توکن بگیریم / دریافت اطلاعات سمت بکند ایمن تر هست
         }
         try {
@@ -63,10 +61,11 @@ function Todolist({ user }) {
                 toast.success(response.data.message);
                 //! 1 way realtime update todolist
                 // setTodos((prev) => { return [...todos, newTodo] })
+               
                 //* 2 way best way for update todolist
                 getAllTodo();
                 setTitle("");
-            } else if (response.status == 401) {
+             } else if (response.status == 401) {
                 router.push("/signin");
                 toast.error(response.data.message);
             } else {
